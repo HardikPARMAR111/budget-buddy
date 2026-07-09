@@ -1,96 +1,68 @@
-# Ledger — Personal Budget & Savings Manager
+# 💰 Ledger — Personal Budget & Savings Tracker
 
-A secure, responsive personal expense and savings tracker built with Next.js, Firebase Authentication, and Cloud Firestore.
+**Ledger** is a full-stack personal finance app that helps you track where your money goes every month — income, expenses, and savings — in one clean, simple dashboard. Built to be fast, secure, and usable equally well on your phone or your laptop.
 
-## Features
+No spreadsheets. No third-party bank linking. Just you, your categories, and a clear picture of your money.
 
-- Email/password auth (Firebase Authentication)
-- Set and update monthly income
-- Unlimited custom categories, typed as **Expense** or **Saving**
-- Log transactions with amount, date, and optional notes
-- Edit/delete categories and transactions
-- Dashboard: income, expenses, savings, remaining balance, recent activity
-- Search and filter transactions by category, type, and date range
-- Reports: category breakdown pie charts, 6-month trend chart, monthly summary table
-- Responsive layout (sidebar on desktop, bottom nav on mobile) with dark mode
-- Firestore Security Rules so each user can only read/write their own data
+## ✨ What it does
 
-## Tech stack
+- 🔐 **Secure login** — sign up and log in with email/password (Firebase Authentication)
+- 💵 **Track your income** — set your monthly income, update it anytime
+- 🏷️ **Custom categories** — create unlimited categories like Rent, Food, Tuition, SIP, or Bank Savings, tagged as either an Expense or a Saving
+- 🧾 **Log every transaction** — record amount, date, and an optional note for each expense or saving
+- ✏️ **Full control** — edit or delete any category or transaction at any time
+- 📊 **Dashboard at a glance** — total income, total expenses, total savings, remaining balance, and recent activity
+- 🔍 **Search & filter** — find transactions by category, type, or date range
+- 📈 **Visual reports** — category breakdown charts and a 6-month spending/savings trend
+- 🌓 **Dark mode** — built in, remembers your preference
+- 📱 **Fully responsive** — sidebar navigation on desktop, bottom nav on mobile
 
-Next.js 14 (App Router) · React 18 · TypeScript · Tailwind CSS · Firebase Auth · Cloud Firestore · React Hook Form + Zod · Recharts · Lucide React
+## 🖥️ Live demo
 
-## 1. Firebase project setup
+_(Add your Vercel URL here once deployed — e.g. `https://ledgerdemain.vercel.app`)_
 
-1. Go to the [Firebase console](https://console.firebase.google.com/) → **Add project**.
-2. In your project, open **Build → Authentication → Get started**, and enable the **Email/Password** sign-in provider.
-3. Open **Build → Firestore Database → Create database** (start in production mode, pick a region close to your users).
-4. Go to **Project settings → General → Your apps → Add app → Web**, register the app, and copy the config values shown.
-5. Create a `.env.local` file in the project root (copy `.env.local.example`) and paste in your values:
+## 🛠️ Built with
 
-   ```
-   NEXT_PUBLIC_FIREBASE_API_KEY=...
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
-   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
-   NEXT_PUBLIC_FIREBASE_APP_ID=...
-   ```
+| Layer | Technology |
+|---|---|
+| Framework | [Next.js 14](https://nextjs.org/) (App Router) + React 18 + TypeScript |
+| Styling | [Tailwind CSS](https://tailwindcss.com/) |
+| Auth | [Firebase Authentication](https://firebase.google.com/products/auth) |
+| Database | [Cloud Firestore](https://firebase.google.com/products/firestore) |
+| Forms & validation | React Hook Form + [Zod](https://zod.dev/) |
+| Charts | [Recharts](https://recharts.org/) |
+| Icons | [Lucide](https://lucide.dev/) |
+| Hosting | [Vercel](https://vercel.com/) |
 
-6. Deploy the included security rules so users can only access their own documents:
+## 🗂️ How data is organized
 
-   ```bash
-   npm install -g firebase-tools
-   firebase login
-   firebase init firestore   # point it at this project, keep firestore.rules
-   firebase deploy --only firestore:rules
-   ```
+Every user's data lives in three Firestore collections, all scoped to their own account:
 
-   Or paste the contents of `firestore.rules` directly into **Firestore Database → Rules** in the console and click **Publish**.
+- **`users`** — name, email, monthly income
+- **`categories`** — category name, type (expense/saving), color
+- **`transactions`** — amount, date, note, linked to a category and user
 
-## 2. Firestore data model
+Firestore Security Rules (see `firestore.rules`) make sure a user can only ever read or write their own documents — nobody else's data is reachable, even through the API.
 
-| Collection      | Document fields                                                                 |
-|-----------------|-----------------------------------------------------------------------------------|
-| `users/{uid}`   | `uid, name, email, monthlyIncome, createdAt`                                     |
-| `categories/{id}` | `userId, name, type ("expense" \| "saving"), color, createdAt`                |
-| `transactions/{id}` | `userId, categoryId, categoryName, type, amount, date, note?, createdAt`    |
+## 🚀 Getting started locally
 
-Every document is linked to `request.auth.uid`; the security rules in `firestore.rules` enforce that a user can only read or write documents where `userId` matches their own UID.
+### 1. Clone the repo
+```bash
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
+```
 
-> Firestore may prompt you to create a composite index the first time you load `/dashboard` or `/transactions` (console will show a direct link in the error message) — click it once and Firestore builds the index automatically.
-
-## 3. Run locally
-
+### 2. Install dependencies
 ```bash
 npm install
-npm run dev
 ```
 
-Visit http://localhost:3000 — you'll land on `/login`. Create an account from there; your income and profile are stored in Firestore automatically.
+### 3. Set up Firebase
+- Create a project at the [Firebase console](https://console.firebase.google.com/)
+- Enable **Authentication → Email/Password**
+- Enable **Cloud Firestore**
+- Deploy the included rules: `firebase deploy --only firestore:rules`
+- Register a Web app under **Project settings** and copy the config values
 
-## 4. Deploy to Vercel
-
-1. Push this project to a GitHub repository.
-2. Go to [vercel.com/new](https://vercel.com/new) and import the repo.
-3. Add the same six `NEXT_PUBLIC_FIREBASE_*` environment variables in **Project Settings → Environment Variables**.
-4. Deploy. Add your production domain to Firebase **Authentication → Settings → Authorized domains**.
-
-## Project structure
-
-```
-src/
-  app/                # Routes: login, register, dashboard, categories, transactions, reports
-  components/          # AppShell, forms, lists, LedgerBar, charts/
-  context/AuthContext.tsx
-  hooks/               # useCategories, useTransactions (Firestore realtime listeners)
-  lib/                 # firebase.ts, schemas.ts (Zod), utils.ts
-  types/               # Shared TypeScript types
-firestore.rules
-```
-
-## Notes
-
-- All Firestore reads are realtime (`onSnapshot`), so the UI updates instantly across tabs.
-- Forms are validated with Zod via `@hookform/resolvers`.
-- Dark mode preference is stored in `localStorage` and applied before paint to avoid flashing.
-- Currency is formatted as INR (₹) by default — change the `formatCurrency` function in `src/lib/utils.ts` to switch currencies.
+### 4. Add your environment variables
+Create a `.env.local` file in the project root:
