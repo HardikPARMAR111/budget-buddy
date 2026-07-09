@@ -23,16 +23,16 @@ _(Add your Vercel URL here once deployed — e.g. `https://ledgerdemain.vercel.a
 
 ## 🛠️ Built with
 
-| Layer | Technology |
-|---|---|
-| Framework | [Next.js 14](https://nextjs.org/) (App Router) + React 18 + TypeScript |
-| Styling | [Tailwind CSS](https://tailwindcss.com/) |
-| Auth | [Firebase Authentication](https://firebase.google.com/products/auth) |
-| Database | [Cloud Firestore](https://firebase.google.com/products/firestore) |
-| Forms & validation | React Hook Form + [Zod](https://zod.dev/) |
-| Charts | [Recharts](https://recharts.org/) |
-| Icons | [Lucide](https://lucide.dev/) |
-| Hosting | [Vercel](https://vercel.com/) |
+| Layer              | Technology                                                             |
+| ------------------ | ---------------------------------------------------------------------- |
+| Framework          | [Next.js 14](https://nextjs.org/) (App Router) + React 18 + TypeScript |
+| Styling            | [Tailwind CSS](https://tailwindcss.com/)                               |
+| Auth               | [Firebase Authentication](https://firebase.google.com/products/auth)   |
+| Database           | [Cloud Firestore](https://firebase.google.com/products/firestore)      |
+| Forms & validation | React Hook Form + [Zod](https://zod.dev/)                              |
+| Charts             | [Recharts](https://recharts.org/)                                      |
+| Icons              | [Lucide](https://lucide.dev/)                                          |
+| Hosting            | [Vercel](https://vercel.com/)                                          |
 
 ## 🗂️ How data is organized
 
@@ -47,17 +47,20 @@ Firestore Security Rules (see `firestore.rules`) make sure a user can only ever 
 ## 🚀 Getting started locally
 
 ### 1. Clone the repo
+
 ```bash
 git clone https://github.com/<your-username>/<repo-name>.git
 cd <repo-name>
 ```
 
 ### 2. Install dependencies
+
 ```bash
 npm install
 ```
 
 ### 3. Set up Firebase
+
 - Create a project at the [Firebase console](https://console.firebase.google.com/)
 - Enable **Authentication → Email/Password**
 - Enable **Cloud Firestore**
@@ -65,4 +68,5 @@ npm install
 - Register a Web app under **Project settings** and copy the config values
 
 ### 4. Add your environment variables
+
 Create a `.env.local` file in the project root:
