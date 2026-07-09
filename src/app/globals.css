@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-paper text-ink dark:bg-canvasdark dark:text-paper font-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  ::selection {
+    @apply bg-gold-300/50;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark rounded-lg shadow-card dark:shadow-cardDark;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-forest-700 px-4 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-forest-600 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-line-light dark:border-line-dark bg-transparent px-4 py-2.5 text-sm font-medium text-ink dark:text-paper transition-colors hover:bg-forest-50 dark:hover:bg-surface-dark/60;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-clay-500 px-3 py-2 text-sm font-medium text-paper transition-colors hover:bg-clay-600;
+  }
+  .input-field {
+    @apply w-full rounded-md border border-line-light dark:border-line-dark bg-transparent px-3 py-2.5 text-sm text-ink dark:text-paper placeholder:text-ink/40 dark:placeholder:text-paper/40 focus:outline-none focus:ring-2 focus:ring-forest-500/40 focus:border-forest-500;
+  }
+  .label-field {
+    @apply mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink/60 dark:text-paper/60;
+  }
+  .error-text {
+    @apply mt-1 text-xs text-clay-500;
+  }
+}
+
+/* Ledger ruler ticks used behind the balance bar - the signature visual element */
+.ledger-ticks {
+  background-image: repeating-linear-gradient(
+    to right,
+    currentColor 0px,
+    currentColor 1px,
+    transparent 1px,
+    transparent 24px
+  );
+  opacity: 0.12;
+}
