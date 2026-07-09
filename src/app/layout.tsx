@@ -20,9 +20,29 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ledger — Personal Budget & Savings",
+  metadataBase: new URL("https://budget-buddy-fawn-theta.vercel.app/"), // your real deployed URL
+  title: {
+    default: "Budget Buddy — Personal Budget & Savings Tracker",
+    template: "%s | Budget Buddy",
+  },
   description:
-    "Track income, expenses, and savings with a clear, calm ledger for your money.",
+    "Track income, expenses, and savings with Budget Buddy — custom categories, monthly summaries, and visual reports, all in one clean dashboard.",
+  keywords: [
+    "budget tracker",
+    "expense tracker",
+    "personal finance app",
+    "savings tracker",
+    "budget buddy",
+    "budget app",
+  ],
+  openGraph: {
+    title: "Budget Buddy — Personal Budget & Savings Tracker",
+    description: "Track income, expenses, and savings in one clean dashboard.",
+    url: "https://budget-buddy-fawn-theta.vercel.app/",
+    siteName: "Budget Buddy",
+    images: ["/og-image.png"],
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {
